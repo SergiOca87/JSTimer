@@ -1,0 +1,26 @@
+.thought-container {
+    width: 100%;
+    height: 30vh;
+}
+
+.thought-container-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.thought-container-list li{
+    height: 2rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background: blueviolet;
+}
+    
+.thought-container-list li{
+    margin: 1rem;
+}

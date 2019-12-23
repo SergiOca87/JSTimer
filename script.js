@@ -1,8 +1,13 @@
 class Timer {
-    constructor(startButton, pauseButton, durationInput ) {
+    constructor(startButton, pauseButton, durationInput, callbacks ) {
         this.startButton = startButton;
         this.pauseButton = pauseButton;
         this.durationInput = durationInput;
+        this.callbacks = callbacks;
+
+        if( callbacks ) {
+            this.onStart = callbacks.onStart;
+        }
 
         //listeners
         this.startButton.addEventListener('click', this.start);
@@ -10,6 +15,11 @@ class Timer {
     }
 
     start = () => {
+        //If start callback is defined...
+        if(this.onStart) {
+            //Invoke it.
+            this.onStart();
+        }
        
         //First tick is initiated manually, otherwise the user would have to wait a second for the setInterval to start
         this.tick();
@@ -48,4 +58,44 @@ const start = document.querySelector('#start');
 const pause = document.querySelector('#pause');
 const duration = document.querySelector('#duration');
 
-new Timer( start, pause, duration);
+
+const timer = new Timer(start, pause, duration, 
+    //We add a callbacks Object as lifecycles, allows us to hook our Timer to the outside
+    {
+        onStart() {
+            console.log('timer has started');
+        },
+        onTick() {
+
+        },
+        onComplete() {
+
+        }
+    }
+);
+
+//Thought container
+const thoughtListContainer = document.querySelector('.thought-container');
+const thoughtList = document.querySelector('.thought-container-list');
+
+const addThought = () => {
+    const thought = `
+        <li>
+            <input type="text"></input>
+        </li>
+    `
+
+    thoughtList.insertAdjacentHTML('beforeend', thought);
+
+    
+}
+
+//Clicks for mobile
+thoughtListContainer.addEventListener('click', addThought);
+
+//Spacebar for desktop
+document.body.onkeyup = function(e){
+    if(e.keyCode == 32){
+        addThought();
+    }
+}
