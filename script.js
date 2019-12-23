@@ -78,7 +78,12 @@ const timer = new Timer(start, pause, duration,
 const thoughtListContainer = document.querySelector('.thought-container');
 const thoughtList = document.querySelector('.thought-container-list');
 
-const addThought = () => {
+const addThought = (e) => {
+
+    console.log(e.target)
+    if(e.target.tagName === 'INPUT' || e.target.tagName === 'LI' ){
+        return
+    }
     const thought = `
         <li>
             <input type="text"></input>
@@ -87,7 +92,6 @@ const addThought = () => {
 
     thoughtList.insertAdjacentHTML('beforeend', thought);
 
-    
 }
 
 //Clicks for mobile
@@ -96,6 +100,6 @@ thoughtListContainer.addEventListener('click', addThought);
 //Spacebar for desktop
 document.body.onkeyup = function(e){
     if(e.keyCode == 32){
-        addThought();
+        addThought(e);
     }
 }
